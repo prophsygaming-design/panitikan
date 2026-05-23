@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fil" class="dark scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kahulugan ng Parabula - Panitikan</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Poppins:wght@300;400;500;600&family=Lora:ital,wght@0,400;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Compiled Tailwind CSS -->
+    <link rel="stylesheet" href="tailwind.css">
+    <link rel="stylesheet" href="page.css">
+    <!-- GSAP for Premium Page Flipping Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+
+<body
+    class="bg-coffee dark:bg-dark-parchment text-sepia dark:text-dark-text transition-colors duration-500 antialiased font-lora min-h-screen flex flex-col justify-between"
+    style="background-image: radial-gradient(circle, rgba(44,33,27,0.85) 0%, rgba(20,15,12,0.95) 100%), url('parchment_bg.png'); background-blend-mode: multiply; background-size: cover;">
+
+    <!-- Header / Navigation -->
+    <header class="w-full py-6 px-6 z-10">
+        <div class="container mx-auto flex justify-between items-center max-w-6xl">
+            <a href="page.html#anyo"
+                class="flex items-center text-ivory hover:text-gold transition-all duration-300 group">
+                <div
+                    class="w-8 h-8 rounded-full border border-gold/30 flex items-center justify-center mr-3 group-hover:border-gold transition-colors">
+                    <svg class="w-4 h-4 text-gold transform group-hover:-translate-x-1 transition-transform" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                </div>
+                <span
+                    class="font-poppins text-xs uppercase tracking-widest group-hover:text-gold transition-colors">Bumalik
+                    sa Tahanan</span>
+            </a>
+            <span class="text-2xl font-playfair font-bold italic text-gold tracking-wide">Panitikang Panlipunan.</span>
+        </div>
+    </header>
+
+    <!-- Main Content: The Open Book -->
+    <main class="flex-grow flex flex-col justify-center items-center px-4 py-8 md:py-16">
+        <div class="w-full max-w-5xl relative">
+
+            <!-- Book Cover Backdrop (Leather shadow effect) -->
+            <div
+                class="absolute -inset-4 bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900 rounded-lg shadow-2xl opacity-90 blur-sm pointer-events-none">
+            </div>
+
+            <!-- Floating Navigation Buttons -->
+            <!-- Left Arrow Button (Prev) -->
+            <button id="prevBtn"
+                class="absolute left-2 md:-left-16 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-coffee/95 text-gold border border-gold/30 hover:border-gold flex items-center justify-center shadow-lg hover:shadow-[0_0_15px_rgba(197,160,89,0.5)] transition-all duration-300 transform hover:scale-110 opacity-0 pointer-events-none"
+                aria-label="Nakaraang Pahina">
+                <svg class="w-5 h-5 md:w-6 md:h-6 transform hover:-translate-x-0.5 transition-transform" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+
+            <!-- Right Arrow Button (Next) -->
+            <button id="nextBtn"
+                class="absolute right-2 md:-right-16 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-coffee/95 text-gold border border-gold/30 hover:border-gold flex items-center justify-center shadow-lg hover:shadow-[0_0_15px_rgba(197,160,89,0.5)] transition-all duration-300 transform hover:scale-110"
+                aria-label="Susunod na Pahina">
+                <svg class="w-5 h-5 md:w-6 md:h-6 transform hover:translate-x-0.5 transition-transform" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+
+            <!-- Book container -->
+            <div id="bookContainer"
+                class="relative bg-ivory text-coffee shadow-2xl rounded-sm overflow-hidden border-4 border-stone-800/80 min-h-[500px] md:min-h-[700px]"
+                style="perspective: 2000px;">
+
+                <!-- Book Spine Center Fold Effect -->
+                <div
+                    class="hidden md:block absolute top-0 bottom-0 left-1/2 w-6 -ml-3 bg-gradient-to-r from-black/15 via-black/30 to-transparent pointer-events-none z-20">
+                </div>
+                <div class="hidden md:block absolute top-0 bottom-0 left-1/2 w-px bg-stone-400/40 z-20"></div>
+
+                <!-- Spread 1: Kahulugan at Katangian (Pages 1 & 2) -->
+                <div id="spread-1"
+                    class="spread-view grid grid-cols-1 md:grid-cols-2 w-full h-full md:absolute md:inset-0 z-10 transition-all duration-500">
+                    <!-- Left Page (Page 1) -->
+                    <article id="page-1"
+                        class="relative p-6 md:py-8 md:px-12 bg-gradient-to-r from-amber-50/50 via-ivory to-white border-b md:border-b-0 md:border-r border-stone-300/50 flex flex-col justify-between overflow-hidden">
+
+                        <!-- Dynamic Paper Shadow Overlay -->
+                        <div
+                            class="page-shadow absolute inset-0 bg-gradient-to-r from-black/20 via-black/5 to-black/0 pointer-events-none z-30 opacity-0 transition-opacity duration-300">
+                        </div>
+
+                        <div class="absolute inset-0 opacity-5 mix-blend-multiply pointer-events-none"
+                            style="background-image: url('parchment_bg.png');"></div>
+
+                        <div class="absolute inset-4 border border-gold/15 pointer-events-none rounded-sm"></div>
+
+                        <div class="relative z-10 flex-grow flex flex-col justify-center">
+                            <div class="text-center mb-6">
+                                <h1 class="font-playfair font-bold text-4xl lg:text-5xl text-sepia tracking-wide">
+                                    PARABULA</h1>
+
+                                <!-- Separator -->
+                                <div class="flex items-center justify-center my-4 space-x-2">
+                                    <div class="h-px w-10 bg-gold/40"></div>
+                                    <svg class="w-4 h-4 text-gold/60" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 2L2 12h3v8h14v-8h3L12 2zm0 4.25L17.75 12H15v6H9v-6H6.25L12 6.25z" />
+                                    </svg>
+                                    <div class="h-px w-10 bg-gold/40"></div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="font-lora text-sepia/90 text-[15px] md:text-base leading-relaxed text-justify indent-8 space-y-3">
+                                <p>
+                                    Ang <strong class="text-coffee font-semibold font-playfair italic">parabula</strong>
+                                    ay isang maikling salaysaying matalinghaga na nagtuturo ng moral o espiritwal na
+                                    leksyon. Kadalasan, ito ay hango sa Banal na Kasulatan o Bibliya.
+                                </p>
+                                <p>
+                                    Taliwas sa pabula na gumagamit ng mga hayop bilang tauhan, ang parabula ay gumagamit
+                                    ng mga makatotohanang sitwasyon at mga tao upang mas madaling maiugnay ng mambabasa
+                                    ang mga espiritwal na turo at aral sa kanilang sariling buhay at pakikipagkapwa.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 text-center font-cormorant italic text-gold mt-6 text-sm">
+                            1
+                        </div>
+                    </article>
+
+                    <!-- Right Page (Page 2) -->
+                    <article id="page-2"
+                        class="relative p-6 md:py-8 md:px-12 bg-gradient-to-l from-amber-50/50 via-ivory to-white flex flex-col justify-between overflow-hidden">
+
+                        <div
+                            class="page-shadow absolute inset-0 bg-gradient-to-l from-black/20 via-black/5 to-black/0 pointer-events-none z-30 opacity-0 transition-opacity duration-300">
+                        </div>
+
+                        <div class="absolute inset-0 opacity-5 mix-blend-multiply pointer-events-none"
+                            style="background-image: url('parchment_bg.png');"></div>
+
+                        <div class="absolute inset-4 border border-gold/15 pointer-events-none rounded-sm"></div>
+
+                        <div class="relative z-10 flex-grow flex flex-col justify-center">
+                            <h3 class="font-playfair italic font-semibold text-xl text-sepia mb-4 text-center">Mga
+                                Katangian ng Parabula</h3>
+                            <div class="font-lora text-sepia/90 text-sm md:text-base leading-relaxed space-y-3">
+                                <p>
+                                    <strong class="text-coffee font-semibold">1. Hango sa Bibliya</strong> - Naglalaman
+                                    ng mga banal at espiritwal na aral na naglalayong hubugin ang pananampalataya.
+                                </p>
+                                <p>
+                                    <strong class="text-coffee font-semibold">2. Tao bilang Tauhan</strong> - Gumagamit
+                                    ng mga totoong sitwasyon ng tao upang maging kapani-paniwala ang aral.
+                                </p>
+                                <p>
+                                    <strong class="text-coffee font-semibold">3. Matalinghagang Mensahe</strong> -
+                                    Nagtataglay ng malalim na espiritwal na simbolo sa likod ng simpleng naratibo.
+                                </p>
+                                <p>
+                                    <strong class="text-coffee font-semibold">4. Moral na Gabay</strong> - Nagsisilbing
+                                    gabay sa tamang pamumuhay at pakikipag-ugnayan sa Maylikha at kapwa.
+                                </p>
+                            </div>
+
+                            <!-- Decorative Flourish Ornament -->
+                            <div class="flex justify-center my-4">
+                                <svg class="w-16 h-8 text-gold/30" fill="currentColor" viewBox="0 0 100 30">
+                                    <path d="M10,15 C30,5 40,25 50,15 C60,5 70,25 90,15" stroke="currentColor"
+                                        stroke-width="1.5" fill="none" />
+                                    <circle cx="50" cy="15" r="3" fill="currentColor" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 text-center font-cormorant italic text-gold mt-6 text-sm">
+                            2
+                        </div>
+                    </article>
+
+                    <!-- Closed Book Cover Overlay (Front Cover) -->
+                    <div id="bookCover"
+                        class="hidden md:flex absolute top-0 bottom-0 right-0 w-1/2 bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 border-l-4 border-stone-950 p-12 flex-col justify-between items-center text-gold z-40 shadow-2xl rounded-r-sm overflow-hidden"
+                        style="transform-origin: left center; backface-visibility: hidden;">
+                        <div class="absolute inset-0 opacity-15 mix-blend-overlay pointer-events-none"
+                            style="background-image: url('parchment_bg.png');"></div>
+                        <div class="absolute inset-6 border-2 border-gold/30 rounded-sm"></div>
+                        <div class="absolute inset-8 border border-gold/15 rounded-sm"></div>
+
+                        <div class="relative z-10 flex-grow flex flex-col justify-center items-center text-center">
+                            <span class="font-poppins text-xs uppercase tracking-[0.25em] text-gold/60 mb-2">Aklat
+                                ng</span>
+                            <h2
+                                class="font-playfair font-bold text-4xl lg:text-5xl text-gold tracking-widest uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+                                PARABULA</h2>
+                            <div class="flex items-center justify-center my-4 space-x-2">
+                                <div class="h-px w-12 bg-gold/40"></div>
+                                <span class="text-gold text-lg">✨</span>
+                                <div class="h-px w-12 bg-gold/40"></div>
+                            </div>
+                            <span class="font-cormorant italic text-sm text-gold/50">Panitikan sa Lipunan</span>
+                        </div>
+                    </div>
+
+                    <!-- Closed Book Back Cover Overlay -->
+                    <div id="bookBackCover"
+                        class="hidden md:block absolute top-0 bottom-0 left-0 w-1/2 bg-gradient-to-l from-stone-900 via-stone-850 to-stone-900 border-r-4 border-stone-950 z-40 rounded-l-sm overflow-hidden"
+                        style="transform-origin: right center;">
+                        <div class="absolute inset-0 opacity-15 mix-blend-overlay pointer-events-none"
+                            style="background-image: url('parchment_bg.png');"></div>
+                        <div class="absolute inset-6 border-2 border-gold/10 rounded-sm"></div>
+                    </div>
+                </div>
+
+                <!-- Spread 2: Halimbawa (Pages 3 & 4) -->
+                <div id="spread-2"
+                    class="spread-view hidden opacity-0 grid grid-cols-1 md:grid-cols-2 w-full h-full md:absolute md:inset-0 z-0 transition-all duration-500">
+                    <!-- Left Page (Page 3) -->
+                    <article id="page-3"
+                        class="relative p-6 md:py-8 md:px-12 bg-gradient-to-r from-amber-50/50 via-ivory to-white border-b md:border-b-0 md:border-r border-stone-300/50 flex flex-col justify-between overflow-hidden">
+
+                        <div
+                            class="page-shadow absolute inset-0 bg-gradient-to-r from-black/20 via-black/5 to-black/0 pointer-events-none z-30 opacity-0 transition-opacity duration-300">
+                        </div>
+
+                        <div class="absolute inset-0 opacity-5 mix-blend-multiply pointer-events-none"
+                            style="background-image: url('parchment_bg.png');"></div>
+
+                        <div class="absolute inset-4 border border-gold/15 pointer-events-none rounded-sm"></div>
+
+                        <div class="relative z-10 flex-grow flex flex-col justify-center">
+                            <div class="text-center mb-4">
+                                <span
+                                    class="font-poppins text-xs uppercase tracking-widest text-gold/60 block mb-1">Halimbawa
+                                    ng Parabula</span>
+                                <h2
+                                    class="font-playfair font-bold text-2xl lg:text-3xl text-sepia tracking-wide uppercase">
+                                    Ang Alibughang Anak</h2>
+                                <span class="font-cormorant italic text-xs text-sepia/70 block mt-0.5">Mula sa
+                                    Ebanghelyo ni Lucas (15:11-32)</span>
+
+                                <div class="flex items-center justify-center my-2 space-x-2">
+                                    <div class="h-px w-8 bg-gold/40"></div>
+                                    <svg class="w-3 h-3 text-gold/60" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 2L2 12h3v8h14v-8h3L12 2zm0 4.25L17.75 12H15v6H9v-6H6.25L12 6.25z" />
+                                    </svg>
+                                    <div class="h-px w-8 bg-gold/40"></div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="font-lora text-sepia/90 text-sm md:text-base leading-relaxed text-justify space-y-3">
+                                <p>
+                                    <span
+                                        class="float-left text-4xl lg:text-5xl font-playfair font-bold text-gold mr-2 mt-1 leading-none">M</span>ay
+                                    isang mayamang ama na may dalawang anak. Ang mas batang anak ay humingi ng kanyang
+                                    mana nang maaga, umalis patungo sa malalayong bayan, at doon nilustay ang buong
+                                    kayamanan sa masamang pamumuhay.
+                                </p>
+                                <p>
+                                    Nang dumating ang matinding taggutom sa lupain, siya ay naghirap at nagutom nang
+                                    labis na ninais niyang kainin ang pagkain ng mga baboy na kanyang inaalagaan.
+                                </p>
+                                <p>
+                                    Dahil dito, nagpasiya siyang bumalik sa kanyang ama upang humingi ng patawad at
+                                    maglingkod bilang isang katulong.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 text-center font-cormorant italic text-gold mt-6 text-sm">
+                            3
+                        </div>
+                    </article>
+
+                    <!-- Right Page (Page 4) -->
+                    <article id="page-4"
+                        class="relative p-6 md:py-8 md:px-12 bg-gradient-to-l from-amber-50/50 via-ivory to-white flex flex-col justify-between overflow-hidden">
+
+                        <div
+                            class="page-shadow absolute inset-0 bg-gradient-to-l from-black/20 via-black/5 to-black/0 pointer-events-none z-30 opacity-0 transition-opacity duration-300">
+                        </div>
+
+                        <div class="absolute inset-0 opacity-5 mix-blend-multiply pointer-events-none"
+                            style="background-image: url('parchment_bg.png');"></div>
+
+                        <div class="absolute inset-4 border border-gold/15 pointer-events-none rounded-sm"></div>
+
+                        <div class="relative z-10 flex-grow flex flex-col justify-center">
+                            <div
+                                class="font-lora text-sepia/90 text-sm md:text-base leading-relaxed text-justify space-y-3">
+                                <p>
+                                    Ngunit habang siya ay malayo pa, nakita na siya ng kanyang ama. Dahil sa habag at
+                                    pagmamahal, patakbo itong sumalubong, niyakap siya, at nag-utos na magdaos ng
+                                    malaking piging sapagkat "ang anak na ito ay nawala at nahanap, namatay ngunit
+                                    muling nabuhay."
+                                </p>
+                                <p>
+                                    Nagalit ang matandang kapatid, ngunit ipinaliwanag ng ama na marapat lamang na
+                                    magsaya dahil sa pagbabalik ng kanyang kapatid na nagpakumbaba at nagsisi.
+                                </p>
+                            </div>
+
+                            <!-- Gintong Aral Block -->
+                            <div class="bg-gold/5 border border-gold/20 p-2.5 rounded-sm mt-3 shadow-sm text-left">
+                                <div class="flex items-center space-x-2 mb-1">
+                                    <span class="text-gold text-lg">✨</span>
+                                    <span
+                                        class="font-playfair font-bold text-sepia tracking-wide text-xs md:text-sm uppercase">Gintong
+                                        Aral</span>
+                                </div>
+                                <p
+                                    class="font-lora text-sepia/80 text-[11px] md:text-xs leading-relaxed italic text-justify">
+                                    "Ang tunay na pagmamahal at pagpapatawad ay walang kundisyon. Anumang pagkakamali
+                                    ang ating magawa sa buhay, laging may bukas na pintuan para sa pagpapakumbaba,
+                                    pagbabalik-loob, at pagtanggap ng bagong simula."
+                                </p>
+                            </div>
+
+                            <!-- Decorative Flourish Ornament -->
+                            <div class="flex justify-center my-1.5">
+                                <svg class="w-12 h-6 text-gold/30" fill="currentColor" viewBox="0 0 100 30">
+                                    <path d="M10,15 C30,5 40,25 50,15 C60,5 70,25 90,15" stroke="currentColor"
+                                        stroke-width="1.5" fill="none" />
+                                    <circle cx="50" cy="15" r="3" fill="currentColor" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 text-center font-cormorant italic text-gold mt-6 text-sm">
+                            4
+                        </div>
+                    </article>
+                </div>
+
+            </div>
+
+            <!-- Pagination tabs below the book -->
+            <div class="flex justify-center items-center mt-6 space-x-8 z-20 relative">
+                <button id="tab-spread-1"
+                    class="font-poppins text-xs uppercase tracking-widest text-gold border-b-2 border-gold pb-1 transition-all duration-300 focus:outline-none">
+                    Kahulugan (1-2)
+                </button>
+                <button id="tab-spread-2"
+                    class="font-poppins text-xs uppercase tracking-widest text-ivory/50 hover:text-gold/80 border-b-2 border-transparent pb-1 transition-all duration-300 focus:outline-none">
+                    Halimbawa (3-4)
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-6 text-center text-ivory/40 z-10 text-xs font-poppins">
+        &copy; 2026 Panitikan sa Lipunan. Pinapagana ng sining ng pagsulat.
+    </footer>
+
+    <!-- Custom Script for Premium Hyper-Realistic 3D Page Turn & Theme Sync -->
+    <script>
+        let currentSpread = 1;
+        let isTransitioning = false;
+
+        // Synchronize dark/light theme from localStorage
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        function goToSpread(spreadNum) {
+            if (spreadNum === currentSpread || isTransitioning) return;
+            isTransitioning = true;
+
+            const current = document.getElementById(`spread-${currentSpread}`);
+            const next = document.getElementById(`spread-${spreadNum}`);
+            const tabCurrent = document.getElementById(`tab-spread-${currentSpread}`);
+            const tabNext = document.getElementById(`tab-spread-${spreadNum}`);
+
+            // Update Pagination tab UI
+            tabCurrent.classList.remove('text-gold', 'border-gold');
+            tabCurrent.classList.add('text-ivory/50', 'border-transparent');
+            tabNext.classList.remove('text-ivory/50', 'border-transparent');
+            tabNext.classList.add('text-gold', 'border-gold');
+
+            // Hide/Show Side Nav Buttons with scale & opacity
+            if (spreadNum === 1) {
+                gsap.to('#prevBtn', {
+                    opacity: 0, scale: 0.8, duration: 0.3, onComplete: () => {
+                        document.getElementById('prevBtn').classList.add('pointer-events-none');
+                    }
+                });
+                gsap.to('#nextBtn', {
+                    opacity: 1, scale: 1, duration: 0.3, onStart: () => {
+                        document.getElementById('nextBtn').classList.remove('pointer-events-none');
+                    }
+                });
+            } else {
+                gsap.to('#nextBtn', {
+                    opacity: 0, scale: 0.8, duration: 0.3, onComplete: () => {
+                        document.getElementById('nextBtn').classList.add('pointer-events-none');
+                    }
+                });
+                gsap.to('#prevBtn', {
+                    opacity: 1, scale: 1, duration: 0.3, onStart: () => {
+                        document.getElementById('prevBtn').classList.remove('pointer-events-none');
+                    }
+                });
+            }
+
+            const isDesktop = window.innerWidth >= 768;
+
+            if (isDesktop) {
+                // Desktop/Tablet Hyper-Realistic 3D Page Turn Bending Physics
+                gsap.set('#bookContainer', { perspective: 2200 });
+
+                const timeline = gsap.timeline({
+                    onComplete: () => {
+                        // Reset properties cleanly after the animation finishes
+                        gsap.set(['#page-1', '#page-2', '#page-3', '#page-4'], {
+                            rotateY: 0, rotateZ: 0, scaleX: 1, x: 0, zIndex: '', opacity: ''
+                        });
+                        gsap.set(['#spread-1 .page-shadow', '#spread-2 .page-shadow'], { opacity: 0 });
+
+                        current.classList.add('hidden');
+                        current.classList.remove('z-10');
+                        current.classList.add('z-0');
+
+                        next.classList.remove('z-0');
+                        next.classList.add('z-10');
+
+                        isTransitioning = false;
+                    }
+                });
+
+                if (spreadNum === 2) {
+                    // TURNING FORWARD: Spread 1 -> Spread 2
+                    next.classList.remove('hidden');
+                    next.classList.remove('z-10');
+                    next.classList.add('z-0');
+                    gsap.set(next, { opacity: 1 });
+
+                    gsap.set('#page-3', { opacity: 0 });
+
+                    gsap.set('#page-2', { transformOrigin: 'left center', zIndex: 30 });
+
+                    timeline.to('#page-2', {
+                        rotateY: -90,
+                        rotateZ: -4,      // Z-axis corner lift
+                        scaleX: 0.88,     // X-scale compression bend
+                        duration: 0.55,
+                        ease: 'power1.inOut'
+                    });
+
+                    timeline.to('#page-2 .page-shadow', {
+                        opacity: 0.5,
+                        duration: 0.55,
+                        ease: 'power1.in'
+                    }, 0);
+
+                    timeline.add(() => {
+                        document.getElementById('page-2').style.opacity = 0;
+                        document.getElementById('page-3').style.opacity = 1;
+                        gsap.set('#page-3', { transformOrigin: 'right center', rotateY: 90, rotateZ: 4, scaleX: 0.88, zIndex: 30 });
+                        gsap.set('#page-3 .page-shadow', { opacity: 0.5 });
+                    });
+
+                    timeline.to('#page-3', {
+                        rotateY: 0,
+                        rotateZ: 0,
+                        scaleX: 1,
+                        duration: 0.6,
+                        ease: 'power1.out'
+                    });
+
+                    timeline.to('#page-3 .page-shadow', {
+                        opacity: 0,
+                        duration: 0.6,
+                        ease: 'power1.out'
+                    }, '-=0.6');
+
+                } else {
+                    // TURNING BACKWARD: Spread 2 -> Spread 1
+                    next.classList.remove('hidden');
+                    next.classList.remove('z-10');
+                    next.classList.add('z-0');
+                    gsap.set(next, { opacity: 1 });
+
+                    gsap.set('#page-2', { opacity: 0 });
+
+                    gsap.set('#page-3', { transformOrigin: 'right center', zIndex: 30 });
+
+                    timeline.to('#page-3', {
+                        rotateY: 90,
+                        rotateZ: 4,       // Tilt bottom left corner
+                        scaleX: 0.88,     // Paper bend compression
+                        duration: 0.55,
+                        ease: 'power1.inOut'
+                    });
+
+                    timeline.to('#page-3 .page-shadow', {
+                        opacity: 0.5,
+                        duration: 0.55,
+                        ease: 'power1.in'
+                    }, 0);
+
+                    timeline.add(() => {
+                        document.getElementById('page-3').style.opacity = 0;
+                        document.getElementById('page-2').style.opacity = 1;
+                        gsap.set('#page-2', { transformOrigin: 'left center', rotateY: -90, rotateZ: -4, scaleX: 0.88, zIndex: 30 });
+                        gsap.set('#page-2 .page-shadow', { opacity: 0.5 });
+                    });
+
+                    timeline.to('#page-2', {
+                        rotateY: 0,
+                        rotateZ: 0,
+                        scaleX: 1,
+                        duration: 0.6,
+                        ease: 'power1.out'
+                    });
+
+                    timeline.to('#page-2 .page-shadow', {
+                        opacity: 0,
+                        duration: 0.6,
+                        ease: 'power1.out'
+                    }, '-=0.6');
+                }
+            } else {
+                // Mobile Stacked Slide & Fade
+                const timeline = gsap.timeline({
+                    onComplete: () => {
+                        current.classList.add('hidden');
+                        isTransitioning = false;
+                    }
+                });
+
+                next.classList.remove('hidden');
+
+                timeline.to(current, {
+                    x: spreadNum === 2 ? -50 : 50,
+                    opacity: 0,
+                    duration: 0.45,
+                    ease: 'power2.inOut'
+                });
+
+                timeline.fromTo(next, {
+                    x: spreadNum === 2 ? 50 : -50,
+                    opacity: 0
+                }, {
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                });
+            }
+
+            currentSpread = spreadNum;
+        }
+
+        // Click Event Listeners
+        document.getElementById('prevBtn').addEventListener('click', () => goToSpread(1));
+        document.getElementById('nextBtn').addEventListener('click', () => goToSpread(2));
+        document.getElementById('tab-spread-1').addEventListener('click', () => goToSpread(1));
+        document.getElementById('tab-spread-2').addEventListener('click', () => goToSpread(2));
+
+        // Keyboard Arrow Navigation
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                goToSpread(2);
+            } else if (e.key === 'ArrowLeft') {
+                goToSpread(1);
+            }
+        });
+
+        // 3D Cinematic Book Opening Intro on Load
+        window.addEventListener('load', () => {
+            const isDesktop = window.innerWidth >= 768;
+            if (isDesktop) {
+                // Set initial states for clean unfolding
+                gsap.set('#bookContainer', { perspective: 2200 });
+                gsap.set('#bookCover', { transformOrigin: 'left center', rotateY: 0, opacity: 1, zIndex: 40 });
+                gsap.set('#bookBackCover', { transformOrigin: 'right center', rotateY: 0, opacity: 1, zIndex: 40 });
+                gsap.set('#page-1', { transformOrigin: 'right center', rotateY: 90, scaleX: 0.9 });
+                gsap.set('#page-2', { transformOrigin: 'left center', rotateY: -35, scaleX: 0.9 });
+
+                const intro = gsap.timeline({
+                    delay: 0.5,
+                    onComplete: () => {
+                        // Clean up intro cover layers so they don't block interaction
+                        document.getElementById('bookCover').style.display = 'none';
+                        document.getElementById('bookBackCover').style.display = 'none';
+                        gsap.set(['#page-1', '#page-2'], { rotateY: 0, scaleX: 1, transformOrigin: '' });
+                    }
+                });
+
+                // 1. Flip open the Front Cover to the left (-180deg)
+                intro.to('#bookCover', {
+                    rotateY: -180,
+                    duration: 1.5,
+                    ease: 'power2.inOut'
+                });
+
+                // Fade out cover details past 90 degrees
+                intro.to('#bookCover', {
+                    opacity: 0,
+                    duration: 0.45,
+                    ease: 'none'
+                }, '-=0.75');
+
+                // 2. Fold back and fade the Left Back Cover to reveal Page 1
+                intro.to('#bookBackCover', {
+                    rotateY: -180,
+                    opacity: 0,
+                    duration: 1.5,
+                    ease: 'power2.inOut'
+                }, 0);
+
+                // 3. Unfold Page 1 flat (90deg -> 0deg)
+                intro.to('#page-1', {
+                    rotateY: 0,
+                    scaleX: 1,
+                    duration: 1.3,
+                    ease: 'power2.out'
+                }, '-=1.2');
+
+                // 4. Unfold Page 2 flat (-35deg -> 0deg)
+                intro.to('#page-2', {
+                    rotateY: 0,
+                    scaleX: 1,
+                    duration: 1.1,
+                    ease: 'power2.out'
+                }, '-=1.1');
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+@source "./*.html";
+
+@theme {
+  --color-parchment: #f4ebd8;
+  --color-sepia: #4a3b32;
+  --color-ivory: #fffdfa;
+  --color-gold: #c5a059;
+  --color-coffee: #2c211b;
+  --color-dark-parchment: #2a241e;
+  --color-dark-surface: #332d26;
+  --color-dark-text: #e6d8c3;
+
+  --font-playfair: "Playfair Display", serif;
+  --font-cormorant: "Cormorant Garamond", serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-lora: "Lora", serif;
+}

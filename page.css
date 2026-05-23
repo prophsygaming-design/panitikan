@@ -1,0 +1,57 @@
+/* ============================================================
+   PANTIKAN PALINPUNAN – Custom Aesthetics & Overrides
+   ============================================================ */
+
+/* Base font setting */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom Vintage Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f4ebd8;
+}
+
+.dark ::-webkit-scrollbar-track {
+    background: #2a241e;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c5a059;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #9f7d40;
+}
+
+/* Base text selection color */
+::selection {
+    background: rgba(197, 160, 89, 0.4);
+    color: inherit;
+}
+
+/* Navbar glass effect when scrolled */
+.nav-scrolled {
+    background-color: rgba(44, 33, 27, 0.85);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+.dark .nav-scrolled {
+    background-color: rgba(26, 22, 18, 0.9);
+}
+
+/* Hide scrollbar for cleaner look on certain containers if needed */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
